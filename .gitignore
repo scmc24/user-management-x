@@ -1,0 +1,7 @@
+code/account-service/api/static/*
+code/account-service/api/*/migrations/*
+code/service-proxy/target/*
+code/service-registery/target/*
+code/service_config/target/*
+
+code/cloud-conf/*

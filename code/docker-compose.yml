@@ -1,0 +1,106 @@
+services:
+  service-config:
+    restart: 'on-failure'
+    build: 
+      context: ./service_config
+
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_APPLICATION_NAME=service-config
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/scmc24/user-management-cloud-conf
+
+    networks:
+      - user-network
+  
+  service-registry:
+    restart: 'on-failure'
+    build: 
+      context: ./service-registery
+
+    ports:
+      - "8761:8761" # Port pour le service d'enregistrement
+    environment:
+      - SPRING_APPLICATION_NAME=service-registery
+      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
+      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
+    networks:
+      - user-network
+    depends_on:
+      - service-config
+    
+    
+  service-proxy:
+    restart: 'on-failure'
+    build: 
+      context: ./service-proxy
+    ports:
+      - "8079:8079"
+    environment:
+      - SPRING_APPLICATION_NAME=service-proxy
+      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
+      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
+
+ 
+    networks:
+      - user-network
+    depends_on:
+      - service-config
+      - service-registry
+
+
+  # rabbitmq:
+  #   restart: 'on-failure'
+  #   image: rabbitmq:management
+  #   ports: 
+  #     - "5672:5672" 
+  #     - "15672:15672" # Port pour l'interface de gestion
+  #   networks:
+  #     - user-network
+
+  
+  account-service:
+    restart: 'on-failure'
+    build: 
+      context: ./account-service
+    ports:
+      - "8083:8083"
+    networks:
+      - user-network
+    volumes:
+      - ./account-service/api:/app
+    depends_on:
+      - service-config
+      - service-registry
+      #- rabbitmq
+
+
+ 
+
+
+  
+  
+
+ 
+ 
+
+
+ 
+  frontend:
+    build: ./frontend
+    ports: 
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - user-network
+
+networks:
+  user-network:
+    driver: bridge
+  
+volumes:
+  .:
+
+    
