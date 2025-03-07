@@ -1,0 +1,3 @@
+[submodule "code/cloud-conf"]
+	path = code/cloud-conf
+	url = https://github.com/scmc24/user-management-cloud-conf
