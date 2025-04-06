@@ -169,7 +169,7 @@ LOGGING = {
     },
 }
 
-FORCE_SCRIPT_NAME = '/ACCOUNT-SERVICE'  # Set to the service's base path
+#FORCE_SCRIPT_NAME = '/ACCOUNT-SERVICE'  # Set to the service's base path
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

@@ -16,5 +16,9 @@ python-dotenv
 Pillow
 requests
 drf_yasg
-
+pytest
+pytest-django
+pytest-cov
+pytest-mock
+pytest-xdist
 

@@ -21,7 +21,9 @@ class UserViewSet(viewsets.ModelViewSet):
     model = User
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = []
+    permission_classes = [
+        permissions.AllowAny,
+    ]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = [
         "username",
@@ -34,8 +36,8 @@ class UserViewSet(viewsets.ModelViewSet):
       
     ]
 
-    @action(detail=False,url_path='logout')
-    def logout_user(self, request):
+    @action(detail=False,methods=['post'],url_path='logout')
+    def logout(self, request):
         logout(request)
         response = {
             "status": status.HTTP_200_OK,
@@ -64,7 +66,9 @@ class LoginViewSet(viewsets.ModelViewSet):
     model = User
     queryset = User.objects.all()
     serializer_class = LoginSerializer
-    permission_classes = []
+    permission_classes = [
+        permissions.AllowAny,
+    ]
     
     def create(self, request):
         serializers = self.serializer_class(data=request.data)

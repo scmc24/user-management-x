@@ -22,7 +22,12 @@ echo "================= collect static files ========================"
 python manage.py collectstatic --noinput
 echo "done ."
 
+
+echo "============ test app ======================="
+pytest tests/ --cov --cov-report=html -v
+
 echo "=================running app==================================="
 #daphne -b 0.0.0.0 -p 8000 app.asgi:application
-python manage.py runserver 0.0.0.0:8083
+python manage.py runserver 0.0.0.0:8083 
+ 
 
