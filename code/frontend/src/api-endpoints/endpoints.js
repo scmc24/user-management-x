@@ -7,7 +7,7 @@ export const getAllUsers = async () => {
      return console.log("Unable to fetch users");
     }
  
-    const data = res.data;
+    const data = res.data.data;
     return data;    
 }
 export const getUser = async () => {
@@ -19,7 +19,7 @@ export const getUser = async () => {
      return console.log("Unable to fetch user");
     }
  
-    const data = res.data;
+    const data = res.data.data;
     return data;
 }
 
@@ -36,7 +36,7 @@ export const login = async (data) => {
         return console.log(`Unable to authenticate ${res.status}`);
     }
 
-    const resData = await res.data;
+    const resData = await res.data.data;
     return resData;
 }
 
@@ -47,7 +47,7 @@ export const logout = async () => {
         return console.log(`Unable to logout ${res.status}`);
     }
 
-    const resData = await res.data;
+    const resData = await res.data.data;
     return resData;
 }
 
@@ -63,7 +63,7 @@ export const register = async (data) => {
         return console.log(`Unable to authenticate ${res.status}`);
     }
 
-    const resData = await res.data;
+    const resData = await res.data.data;
     return resData;
 }
 

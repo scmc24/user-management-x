@@ -43,7 +43,7 @@ class UserViewSet(viewsets.ModelViewSet):
             "status": status.HTTP_200_OK,
             "message": "success",
         }
-        return Response(response, status=status.HTTP_200_OK)
+        return Response(response, status=status.HTTP_200_OK,content_type='application/json')
     
 
 class AdminViewSet(viewsets.ModelViewSet):
@@ -102,23 +102,23 @@ class LoginViewSet(viewsets.ModelViewSet):
                 }
                 
             
-                return Response(response, status=status.HTTP_200_OK)
+                return Response(response, status=status.HTTP_200_OK,content_type='application/json')
             else:
                 response = {
                     "status": status.HTTP_401_UNAUTHORIZED,
                     "message": "Accès refusé"
                 }
-                return Response(response, status=status.HTTP_401_UNAUTHORIZED)
+                return Response(response, status=status.HTTP_401_UNAUTHORIZED,content_type='application/json')
             
         response = {
             "status": status.HTTP_400_BAD_REQUEST,
             "message": "Erreur",
             "data": serializers.errors
         }
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        return Response(response, status=status.HTTP_400_BAD_REQUEST,content_type='application/json')
     
     def list(self, request):
-        return Response({}, status=status.HTTP_200_OK)
+        return Response({}, status=status.HTTP_200_OK,content_type='application/json')
 
 
 class SignUpViewSet(viewsets.ModelViewSet):
@@ -146,15 +146,15 @@ class SignUpViewSet(viewsets.ModelViewSet):
                 }
             logger.info(serializer.data)
             
-            return Response(response, status=status.HTTP_200_OK)
+            return Response(response, status=status.HTTP_200_OK,content_type='application/json')
         
         response = {
             "status" : status.HTTP_400_BAD_REQUEST,
             "data": serializer.errors
         }
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        return Response(response, status=status.HTTP_400_BAD_REQUEST,content_type='application/json')
     
     def list(self, request):
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+        return Response({}, status=status.HTTP_204_NO_CONTENT,content_type='application/json')
 
 

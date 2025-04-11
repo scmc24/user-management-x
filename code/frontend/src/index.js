@@ -8,8 +8,8 @@ import {Provider} from 'react-redux'
 
 import { store } from './store';
 
-//axios.defaults.baseURL = "http://0.0.0.0:8079/ACCOUNT-SERVICE/api";
-axios.defaults.baseURL = "http://0.0.0.0:8083/api";
+axios.defaults.baseURL = "http://127.0.0.1:8079/ACCOUNT-SERVICE/api";
+//axios.defaults.baseURL = "http://0.0.0.0:8083/api";
 
 let token = window.localStorage.getItem("token");
 if(token) axios.defaults.headers.common["Authorization"] = `Token ${token}`; 

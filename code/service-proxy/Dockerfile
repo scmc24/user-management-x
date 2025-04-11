@@ -1,28 +1,30 @@
+# Base image
+FROM python:3.9
 
-# Étape 1 : Construction de l'application
-FROM maven:latest as build
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+# Set working directory
 
-# Définir le répertoire de travail
+
+
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt /requirements.txt
+
+# Install dependencies
+RUN pip install --no-cache-dir -r /requirements.txt
+
+
+RUN mkdir /app
 WORKDIR /app
+# Copy application code
+COPY ./src /app
+COPY .env /app
 
-# Copier le fichier pom.xml et le répertoire src
-COPY pom.xml .
-COPY src ./src
+RUN sed -i 's/\r$//g' /app/start.sh
+RUN chmod +x /app/start.sh
 
-# Construire l'application
-RUN mvn clean package -DskipTests
-
-FROM openjdk:17
-
-
-# Définir le répertoire de travail
-WORKDIR /app
-
-# Copier le JAR construit depuis l'étape de construction
-COPY --from=build /app/target/*.jar app.jar
-
-# Exposer le port de l'application
+# Expose port
 EXPOSE 8079
 
-# Commande pour exécuter l'application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Command to run the application
+ENTRYPOINT [ "/app/start.sh" ]

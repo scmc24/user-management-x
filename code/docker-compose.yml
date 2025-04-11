@@ -31,22 +31,17 @@ services:
     
     
   service-proxy:
-    restart: 'on-failure'
-    build: 
-      context: ./service-proxy
+    build: ./service-proxy
     ports:
-      - "8079:8079"
+      - 8079:8079
+    volumes:
+      - ./service-proxy/src:/app
     environment:
-      - SPRING_APPLICATION_NAME=service-proxy
-      - SPRING_CLOUD_CONFIG_URI=http://service-config:8080
-      - SPRING_CONFIG_IMPORT=configserver:http://service-config:8080
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-registry:8761/eureka/
-
- 
+      - APP_HOST=0.0.0.0
+      - EUREKA_URL=http://service-registry:8761/eureka
     networks:
       - user-network
     depends_on:
-      - service-config
       - service-registry
 
 
@@ -65,7 +60,7 @@ services:
     build: 
       context: ./account-service
     ports:
-      - "8083:8083"
+      - "8083"
     networks:
       - user-network
     volumes:
@@ -73,7 +68,7 @@ services:
     depends_on:
       - service-config
       - service-registry
-      #- rabbitmq
+      
 
 
  

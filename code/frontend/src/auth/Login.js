@@ -21,7 +21,7 @@ const Login = () => {
 
   // Handle login response
   const onResReceived = (data) => {
-    console.log(data.data.user);
+    console.log(data);
     localStorage.setItem('userId', data.data.user.id);
     localStorage.setItem('token', data.data.token);
     localStorage.setItem('email', data.data.user.email);
